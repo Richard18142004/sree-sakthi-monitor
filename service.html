@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sree Sakthi EMS — Service Manager</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body class="app-page">
+<div class="app-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-icon small">
+        <svg width="20" height="20" viewBox="0 0 28 28" fill="none">
+          <rect width="12" height="12" rx="3" fill="currentColor"/>
+          <rect x="16" width="12" height="12" rx="3" fill="currentColor" opacity="0.6"/>
+          <rect y="16" width="12" height="12" rx="3" fill="currentColor" opacity="0.6"/>
+          <rect x="16" y="16" width="12" height="12" rx="3" fill="currentColor"/>
+        </svg>
+      </div>
+      <span class="brand-name">SREE SAKTHI EMS</span>
+      <button class="sidebar-close" id="sidebarClose">×</button>
+    </div>
+    <div class="sidebar-user">
+      <div class="avatar" id="userAvatar">S</div>
+      <div>
+        <div class="user-name" id="sidebarName">Service Manager</div>
+        <div class="user-role-badge" style="background:#0891b220;color:#0891b2;border-radius:20px;padding:2px 10px;font-size:11px;font-weight:600">Service Mgr</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="overview" onclick="showSection('overview',this)">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M3 10L10 3l7 7v7H3v-7z" stroke="currentColor" stroke-width="1.5"/></svg>
+        Overview
+      </a>
+      <a href="#" class="nav-item" data-section="assign" onclick="showSection('assign',this)">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M4 5h12M4 10h8M4 15h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Assign Tasks
+      </a>
+      <a href="#" class="nav-item" data-section="locations" onclick="showSection('locations',this)">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M10 2a5 5 0 015 5c0 4-5 11-5 11S5 11 5 7a5 5 0 015-5z" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="7" r="2" stroke="currentColor" stroke-width="1.5"/></svg>
+        Mechanic Locations
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="nav-item logout-btn" id="logoutBtn">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M13 10H3m0 0l3-3m-3 3l3 3M8 5V3h9v14H8v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Logout
+      </button>
+    </div>
+  </aside>
+
+  <div class="main-wrap">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn"><svg viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+      <div class="topbar-title" id="pageTitle">Overview</div>
+      <div class="topbar-right"><div class="avatar sm" id="topAvatar">S</div></div>
+    </header>
+
+    <main class="main-content">
+      <div id="toast" class="toast hidden"></div>
+
+      <!-- OVERVIEW -->
+      <section id="section-overview" class="admin-section">
+        <div class="welcome-banner admin-banner">
+          <div>
+            <div class="welcome-greeting">Service Manager</div>
+            <div class="welcome-name">Sree Sakthi Automobiles</div>
+            <div class="welcome-sub">Assign and track mechanic service tasks.</div>
+          </div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-icon pending-icon"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M10 6v4l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="stat-num" id="sPending">—</div><div class="stat-label">Pending</div></div></div>
+          <div class="stat-card"><div class="stat-icon inprogress-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 4v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="stat-num" id="sInProgress">—</div><div class="stat-label">In Progress</div></div></div>
+          <div class="stat-card"><div class="stat-icon completed-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10l5 5 7-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="stat-num" id="sCompleted">—</div><div class="stat-label">Completed</div></div></div>
+          <div class="stat-card"><div class="stat-icon delayed-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M10 6v4h4M10 3a7 7 0 100 14A7 7 0 0010 3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="stat-num" id="sDelayed">—</div><div class="stat-label">Delayed</div></div></div>
+        </div>
+        <div class="section-header"><h2>Service Tasks</h2></div>
+        <div class="filter-bar" id="overviewFilter">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="pending">Pending</button>
+          <button class="filter-btn" data-filter="in-progress">In Progress</button>
+          <button class="filter-btn" data-filter="completed">Completed</button>
+          <button class="filter-btn" data-filter="delayed">Delayed</button>
+        </div>
+        <div id="taskList" class="tasks-full-list"></div>
+      </section>
+
+      <!-- ASSIGN TASKS -->
+      <section id="section-assign" class="admin-section hidden">
+        <div class="section-header"><h2>Assign Service Task</h2></div>
+        <div class="modal" style="box-shadow:none;max-width:500px;padding:0">
+          <div class="modal-body" style="padding:0">
+            <div class="form-group">
+              <label>Task Title *</label>
+              <input type="text" id="taskTitle" class="input-field" placeholder="e.g. Tractor engine service"/>
+              <span class="field-error" id="taskTitleErr"></span>
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea id="taskDesc" class="textarea-field" rows="3" placeholder="Service details, customer info…"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Assign Mechanic *</label>
+              <select id="taskEmp" class="select-field">
+                <option value="">Select mechanic…</option>
+              </select>
+              <span class="field-error" id="taskEmpErr"></span>
+            </div>
+            <div class="form-group">
+              <label>Deadline *</label>
+              <input type="date" id="taskDeadline" class="input-field"/>
+              <span class="field-error" id="taskDlErr"></span>
+            </div>
+            <button class="btn-primary btn-full" id="saveTaskBtn">
+              <span id="saveTaskText">Assign Task</span>
+              <span class="spinner hidden" id="saveTaskSpinner"></span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- MECHANIC LOCATIONS -->
+      <section id="section-locations" class="admin-section hidden">
+        <div class="section-header"><h2>Mechanic Locations</h2></div>
+        <div id="locList" class="location-grid"></div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp }       from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc, collection, query, where, addDoc,
+           serverTimestamp, onSnapshot }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { firebaseConfig } from "./app.js";
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+
+  let mechanics = [], allTasks = [], svcUid = null, taskFilter = "all";
+
+  function showToast(msg, type="success") {
+    const t=document.getElementById("toast");t.textContent=msg;
+    t.className=`toast ${type}`;setTimeout(()=>t.classList.add("hidden"),3500);
+  }
+  function statusBadge(s) {
+    const map={pending:"badge-pending","in-progress":"badge-inprogress",completed:"badge-completed",delayed:"badge-delayed"};
+    const label={pending:"Pending","in-progress":"In Progress",completed:"Completed",delayed:"Delayed"};
+    return `<span class="badge ${map[s]||'badge-pending'}">${label[s]||s}</span>`;
+  }
+  function isDelayed(t){return t.status!=="completed"&&t.deadline&&new Date(t.deadline)<new Date();}
+  function empName(uid){return mechanics.find(e=>e.id===uid)?.name||"Unknown";}
+
+  window.showSection=function(id,el){
+    document.querySelectorAll(".admin-section").forEach(s=>s.classList.add("hidden"));
+    document.getElementById("section-"+id).classList.remove("hidden");
+    document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+    if(el)el.classList.add("active");
+    document.getElementById("pageTitle").textContent=el?el.textContent.trim():id;
+    document.getElementById("sidebar").classList.remove("open");
+  };
+
+  document.getElementById("menuBtn").addEventListener("click",()=>document.getElementById("sidebar").classList.add("open"));
+  document.getElementById("sidebarClose").addEventListener("click",()=>document.getElementById("sidebar").classList.remove("open"));
+
+  function updateStats(){
+    document.getElementById("sPending").textContent   =allTasks.filter(t=>t.status==="pending"&&!isDelayed(t)).length;
+    document.getElementById("sInProgress").textContent=allTasks.filter(t=>t.status==="in-progress").length;
+    document.getElementById("sCompleted").textContent =allTasks.filter(t=>t.status==="completed").length;
+    document.getElementById("sDelayed").textContent   =allTasks.filter(t=>isDelayed(t)).length;
+  }
+
+  function renderTasks(){
+    const el=document.getElementById("taskList");
+    let filtered=allTasks;
+    if(taskFilter==="delayed")filtered=allTasks.filter(t=>isDelayed(t));
+    else if(taskFilter!=="all")filtered=allTasks.filter(t=>t.status===taskFilter&&!isDelayed(t));
+    if(!filtered.length){el.innerHTML='<div class="empty-state"><p>No tasks.</p></div>';return;}
+    el.innerHTML=filtered.map(t=>{
+      const eff=isDelayed(t)?"delayed":t.status;
+      return `<div class="task-row">
+        <div class="task-row-main">
+          <div class="task-row-title">${t.title}</div>
+          <div class="task-row-desc">🔧 ${empName(t.assignedTo)} · ${t.description||""}</div>
+        </div>
+        <div class="task-row-meta">
+          <span>📅 ${t.deadline||"—"}</span>
+          ${statusBadge(eff)}
+          ${t.proofUrl?'<span>📷 Proof submitted</span>':""}
+        </div>
+      </div>`;
+    }).join("");
+  }
+
+  document.querySelectorAll("#overviewFilter .filter-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      document.querySelectorAll("#overviewFilter .filter-btn").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");taskFilter=btn.dataset.filter;renderTasks();
+    });
+  });
+
+  function renderLocations(){
+    const el=document.getElementById("locList");
+    const wl=mechanics.filter(m=>m.location);
+    if(!wl.length){el.innerHTML='<div class="empty-state"><p>No location data yet.</p></div>';return;}
+    el.innerHTML=wl.map(m=>`
+      <div class="location-card-admin">
+        <div class="avatar sm">${(m.name||"?")[0]}</div>
+        <div class="loc-info">
+          <div class="loc-name">${m.name}</div>
+          <div class="loc-coords">📍 ${m.location.lat.toFixed(5)}, ${m.location.lng.toFixed(5)}</div>
+          ${m.locationUpdatedAt?.toDate?`<div class="loc-time">Updated: ${m.locationUpdatedAt.toDate().toLocaleString()}</div>`:""}
+        </div>
+        <a href="https://maps.google.com/?q=${m.location.lat},${m.location.lng}" target="_blank" class="btn-secondary btn-sm">Map</a>
+      </div>`).join("");
+  }
+
+  function populateSelect(){
+    const sel=document.getElementById("taskEmp");
+    sel.innerHTML='<option value="">Select mechanic…</option>'+
+      mechanics.map(m=>`<option value="${m.id}">${m.name}</option>`).join("");
+  }
+
+  document.getElementById("saveTaskBtn").addEventListener("click",async()=>{
+    const title=document.getElementById("taskTitle").value.trim();
+    const desc=document.getElementById("taskDesc").value.trim();
+    const empId=document.getElementById("taskEmp").value;
+    const deadline=document.getElementById("taskDeadline").value;
+    let valid=true;
+    if(!title){document.getElementById("taskTitleErr").textContent="Title required";valid=false;}else document.getElementById("taskTitleErr").textContent="";
+    if(!empId){document.getElementById("taskEmpErr").textContent="Select mechanic";valid=false;}else document.getElementById("taskEmpErr").textContent="";
+    if(!deadline){document.getElementById("taskDlErr").textContent="Set deadline";valid=false;}else document.getElementById("taskDlErr").textContent="";
+    if(!valid)return;
+    document.getElementById("saveTaskText").classList.add("hidden");
+    document.getElementById("saveTaskSpinner").classList.remove("hidden");
+    try{
+      await addDoc(collection(db,"tasks"),{
+        title,description:desc,assignedTo:empId,assignedBy:svcUid,
+        status:"pending",taskType:"service",deadline,
+        createdAt:serverTimestamp(),notes:"",proofUrl:""
+      });
+      showToast("Service task assigned!");
+      ["taskTitle","taskDesc","taskDeadline"].forEach(id=>document.getElementById(id).value="");
+      document.getElementById("taskEmp").value="";
+    }catch(err){showToast("Error: "+err.message,"error");}
+    finally{
+      document.getElementById("saveTaskText").classList.remove("hidden");
+      document.getElementById("saveTaskSpinner").classList.add("hidden");
+    }
+  });
+
+  onAuthStateChanged(auth,async user=>{
+    if(!user){window.location.href="login.html";return;}
+    const snap=await getDoc(doc(db,"users",user.uid));
+    if(!snap.exists()||snap.data().role!=="service_manager"){window.location.href="login.html";return;}
+    svcUid=user.uid;
+    const name=snap.data().name||"Service Manager";
+    document.getElementById("sidebarName").textContent=name;
+    document.getElementById("userAvatar").textContent=name[0].toUpperCase();
+    document.getElementById("topAvatar").textContent=name[0].toUpperCase();
+
+    // Listen mechanics only
+    const mq=query(collection(db,"users"),where("role","==","mechanic"));
+    onSnapshot(mq,s=>{
+      mechanics=s.docs.map(d=>({id:d.id,...d.data()}));
+      populateSelect();renderLocations();
+    });
+
+    // Listen service tasks assigned by me
+    const tq=query(collection(db,"tasks"),where("taskType","==","service"));
+    onSnapshot(tq,s=>{
+      allTasks=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+      renderTasks();updateStats();
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click",async()=>{await signOut(auth);window.location.href="login.html";});
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sree Sakthi EMS — Manager</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body class="app-page">
+<div class="app-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-icon small">
+        <svg width="20" height="20" viewBox="0 0 28 28" fill="none">
+          <rect width="12" height="12" rx="3" fill="currentColor"/>
+          <rect x="16" width="12" height="12" rx="3" fill="currentColor" opacity="0.6"/>
+          <rect y="16" width="12" height="12" rx="3" fill="currentColor" opacity="0.6"/>
+          <rect x="16" y="16" width="12" height="12" rx="3" fill="currentColor"/>
+        </svg>
+      </div>
+      <span class="brand-name">SREE SAKTHI EMS</span>
+      <button class="sidebar-close" id="sidebarClose">×</button>
+    </div>
+    <div class="sidebar-user">
+      <div class="avatar" id="userAvatar">M</div>
+      <div>
+        <div class="user-name" id="sidebarName">Manager</div>
+        <div class="user-role-badge" style="background:#6366f120;color:#6366f1;border-radius:20px;padding:2px 10px;font-size:11px;font-weight:600">Manager</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="overview" onclick="showSection('overview',this)">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M3 10L10 3l7 7v7H3v-7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        Overview
+      </a>
+      <a href="#" class="nav-item" data-section="employees" onclick="showSection('employees',this)">
+        <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M2 17a8 8 0 0116 0" stroke="currentColor" stroke-width="1.5"/></svg>
+        Employees
+      </a>
+      <a href="#" class="nav-item" data-section="reports" onclick="showSection('reports',this)">
+        <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 10v3M10 7v6M13 12v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Reports
+      </a>
+      <a href="#" class="nav-item" data-section="sales" onclick="showSection('sales',this)">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M3 14l4-4 3 3 4-5 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Sales Visits
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="nav-item logout-btn" id="logoutBtn">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M13 10H3m0 0l3-3m-3 3l3 3M8 5V3h9v14H8v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Logout
+      </button>
+    </div>
+  </aside>
+
+  <div class="main-wrap">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn"><svg viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+      <div class="topbar-title" id="pageTitle">Overview</div>
+      <div class="topbar-right"><div class="avatar sm" id="topAvatar">M</div></div>
+    </header>
+
+    <main class="main-content">
+      <div id="toast" class="toast hidden"></div>
+
+      <!-- OVERVIEW -->
+      <section id="section-overview" class="admin-section">
+        <div class="welcome-banner admin-banner">
+          <div>
+            <div class="welcome-greeting">Manager Dashboard</div>
+            <div class="welcome-name">Sree Sakthi Automobiles</div>
+            <div class="welcome-sub">Monitor employees, tasks and sales performance.</div>
+          </div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-icon emp-icon"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M2 17a8 8 0 0116 0" stroke="currentColor" stroke-width="1.5"/></svg></div><div><div class="stat-num" id="mTotalEmp">—</div><div class="stat-label">Employees</div></div></div>
+          <div class="stat-card"><div class="stat-icon inprogress-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M4 5h12M4 10h8M4 15h10" stroke="currentColor" stroke-width="1.5"/></svg></div><div><div class="stat-num" id="mTotalTasks">—</div><div class="stat-label">Total Tasks</div></div></div>
+          <div class="stat-card"><div class="stat-icon completed-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10l5 5 7-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="stat-num" id="mCompleted">—</div><div class="stat-label">Completed</div></div></div>
+          <div class="stat-card"><div class="stat-icon delayed-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M10 6v4h4M10 3a7 7 0 100 14A7 7 0 0010 3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="stat-num" id="mDelayed">—</div><div class="stat-label">Delayed</div></div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:rgba(22,163,74,0.1);color:#16a34a"><svg viewBox="0 0 20 20" fill="none"><path d="M3 14l4-4 3 3 4-5 3 3" stroke="currentColor" stroke-width="1.5"/></svg></div><div><div class="stat-num" id="mSales">—</div><div class="stat-label">Sales Visits</div></div></div>
+        </div>
+        <div class="section-header"><h2>Recent Tasks</h2></div>
+        <div id="mRecentTasks" class="tasks-full-list"></div>
+      </section>
+
+      <!-- EMPLOYEES -->
+      <section id="section-employees" class="admin-section hidden">
+        <div class="section-header"><h2>All Employees</h2></div>
+        <div id="mEmpLoading" class="loading-state"><div class="spinner"></div> Loading…</div>
+        <div id="mEmpTable" class="table-wrap hidden">
+          <table class="data-table">
+            <thead><tr><th>Name</th><th>Role</th><th>Department</th><th>Tasks Done</th><th>Pending</th><th>Delayed</th><th>Location</th></tr></thead>
+            <tbody id="mEmpBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- REPORTS -->
+      <section id="section-reports" class="admin-section hidden">
+        <div class="section-header">
+          <h2>Reports</h2>
+          <select id="mReportType" class="select-field" style="max-width:200px">
+            <option value="daily">Daily Report</option>
+            <option value="employee">Employee-wise</option>
+            <option value="task">Task Completion</option>
+          </select>
+        </div>
+        <div id="mReportContent" class="table-wrap"></div>
+      </section>
+
+      <!-- SALES -->
+      <section id="section-sales" class="admin-section hidden">
+        <div class="section-header"><h2>Sales Visits</h2></div>
+        <div id="mSalesLoading" class="loading-state"><div class="spinner"></div> Loading…</div>
+        <div id="mSalesList" class="tasks-full-list hidden"></div>
+        <div id="mSalesEmpty" class="empty-state hidden"><p>No sales visits yet.</p></div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp }       from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc, collection, onSnapshot }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { firebaseConfig } from "./app.js";
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+
+  let employees = [], allTasks = [], allSales = [];
+
+  function statusBadge(s) {
+    const map   = { pending:"badge-pending","in-progress":"badge-inprogress",completed:"badge-completed",delayed:"badge-delayed" };
+    const label = { pending:"Pending","in-progress":"In Progress",completed:"Completed",delayed:"Delayed" };
+    return `<span class="badge ${map[s]||'badge-pending'}">${label[s]||s}</span>`;
+  }
+  function roleBadge(role) {
+    const colors={admin:"#dc2626",manager:"#6366f1",service_manager:"#0891b2",mechanic:"#f59e0b",salesman:"#16a34a"};
+    const labels={admin:"Admin",manager:"Manager",service_manager:"Svc Mgr",mechanic:"Mechanic",salesman:"Salesman"};
+    const c=colors[role]||"#64748b";
+    return `<span style="background:${c}22;color:${c};border-radius:4px;padding:2px 7px;font-size:11px;font-weight:600">${labels[role]||role}</span>`;
+  }
+  function isDelayed(t){ return t.status!=="completed"&&t.deadline&&new Date(t.deadline)<new Date(); }
+  function empName(uid){ return employees.find(e=>e.id===uid)?.name||"Unknown"; }
+
+  window.showSection = function(id, el) {
+    document.querySelectorAll(".admin-section").forEach(s=>s.classList.add("hidden"));
+    document.getElementById("section-"+id).classList.remove("hidden");
+    document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+    if(el) el.classList.add("active");
+    document.getElementById("pageTitle").textContent = el ? el.textContent.trim() : id;
+    document.getElementById("sidebar").classList.remove("open");
+    if(id==="reports") renderReport();
+  };
+
+  document.getElementById("menuBtn").addEventListener("click",()=>document.getElementById("sidebar").classList.add("open"));
+  document.getElementById("sidebarClose").addEventListener("click",()=>document.getElementById("sidebar").classList.remove("open"));
+
+  function updateStats() {
+    document.getElementById("mTotalEmp").textContent   = employees.length;
+    document.getElementById("mTotalTasks").textContent = allTasks.length;
+    document.getElementById("mCompleted").textContent  = allTasks.filter(t=>t.status==="completed").length;
+    document.getElementById("mDelayed").textContent    = allTasks.filter(t=>isDelayed(t)).length;
+    document.getElementById("mSales").textContent      = allSales.length;
+  }
+
+  function renderEmployees() {
+    document.getElementById("mEmpLoading").classList.add("hidden");
+    const table = document.getElementById("mEmpTable");
+    const tbody = document.getElementById("mEmpBody");
+    table.classList.remove("hidden");
+    tbody.innerHTML = employees.map(emp => {
+      const et        = allTasks.filter(t=>t.assignedTo===emp.id);
+      const done      = et.filter(t=>t.status==="completed").length;
+      const pending   = et.filter(t=>t.status==="pending"&&!isDelayed(t)).length;
+      const delayed   = et.filter(t=>isDelayed(t)).length;
+      const loc       = emp.location ? `<a href="https://maps.google.com/?q=${emp.location.lat},${emp.location.lng}" target="_blank">📍 Map</a>` : "—";
+      return `<tr>
+        <td><div class="cell-name"><div class="avatar xs">${(emp.name||"?")[0]}</div>${emp.name}</div></td>
+        <td>${roleBadge(emp.role)}</td>
+        <td>${emp.department||"—"}</td>
+        <td style="color:#16a34a;font-weight:600">${done}</td>
+        <td style="color:#f59e0b;font-weight:600">${pending}</td>
+        <td style="color:#dc2626;font-weight:600">${delayed}</td>
+        <td>${loc}</td>
+      </tr>`;
+    }).join("");
+  }
+
+  function renderRecentTasks() {
+    const el = document.getElementById("mRecentTasks");
+    const recent = [...allTasks].sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,8);
+    if(!recent.length){el.innerHTML='<div class="empty-state"><p>No tasks yet.</p></div>';return;}
+    el.innerHTML=recent.map(t=>{
+      const eff=isDelayed(t)?"delayed":t.status;
+      return `<div class="task-row">
+        <div class="task-row-main">
+          <div class="task-row-title">${t.title}</div>
+          <div class="task-row-desc">👤 ${empName(t.assignedTo)} · ${t.taskType||"general"}</div>
+        </div>
+        <div class="task-row-meta"><span>📅 ${t.deadline||"—"}</span>${statusBadge(eff)}</div>
+      </div>`;
+    }).join("");
+  }
+
+  function renderSales() {
+    document.getElementById("mSalesLoading").classList.add("hidden");
+    const list=document.getElementById("mSalesList"),empty=document.getElementById("mSalesEmpty");
+    if(!allSales.length){empty.classList.remove("hidden");list.classList.add("hidden");return;}
+    empty.classList.add("hidden");list.classList.remove("hidden");
+    list.innerHTML=allSales.map(s=>{
+      const fu=s.followUpDate?new Date(s.followUpDate).toLocaleDateString():"—";
+      const mp=s.visitLocation?.lat?`<a href="https://maps.google.com/?q=${s.visitLocation.lat},${s.visitLocation.lng}" target="_blank">📍</a>`:"";
+      return `<div class="task-row">
+        <div class="task-row-main">
+          <div class="task-row-title">${s.customerName}</div>
+          <div class="task-row-desc">👤 ${empName(s.salesmanId)} · ${s.notes||""}</div>
+        </div>
+        <div class="task-row-meta"><span>Follow-up: ${fu}</span>${mp}</div>
+      </div>`;
+    }).join("");
+  }
+
+  function renderReport() {
+    const type=document.getElementById("mReportType").value;
+    const el=document.getElementById("mReportContent");
+    const today=new Date();today.setHours(0,0,0,0);
+
+    if(type==="daily"){
+      const tt=allTasks.filter(t=>{const d=t.createdAt?.toDate?t.createdAt.toDate():null;if(!d)return false;const dd=new Date(d);dd.setHours(0,0,0,0);return dd.getTime()===today.getTime();});
+      el.innerHTML=`<h3 style="margin-bottom:1rem;font-size:1rem">Daily — ${today.toLocaleDateString()}</h3>
+        <table class="data-table"><thead><tr><th>Task</th><th>Employee</th><th>Status</th><th>Deadline</th></tr></thead>
+        <tbody>${tt.length?tt.map(t=>`<tr><td>${t.title}</td><td>${empName(t.assignedTo)}</td><td>${statusBadge(isDelayed(t)?"delayed":t.status)}</td><td>${t.deadline||"—"}</td></tr>`).join(""):'<tr><td colspan="4" style="text-align:center;color:var(--text-muted)">No tasks today.</td></tr>'}</tbody></table>`;
+    } else if(type==="employee"){
+      el.innerHTML=`<h3 style="margin-bottom:1rem;font-size:1rem">Employee-wise Report</h3>
+        <table class="data-table"><thead><tr><th>Employee</th><th>Role</th><th>Total</th><th>Done</th><th>Pending</th><th>Delayed</th></tr></thead>
+        <tbody>${employees.map(emp=>{
+          const et=allTasks.filter(t=>t.assignedTo===emp.id);
+          const done=et.filter(t=>t.status==="completed").length;
+          const delayed=et.filter(t=>isDelayed(t)).length;
+          const pending=et.filter(t=>t.status==="pending"&&!isDelayed(t)).length;
+          return `<tr><td><div class="cell-name"><div class="avatar xs">${(emp.name||"?")[0]}</div>${emp.name}</div></td><td>${roleBadge(emp.role)}</td><td>${et.length}</td><td style="color:#16a34a;font-weight:600">${done}</td><td style="color:#f59e0b;font-weight:600">${pending}</td><td style="color:#dc2626;font-weight:600">${delayed}</td></tr>`;
+        }).join("")}</tbody></table>`;
+    } else {
+      const rate=allTasks.length?Math.round((allTasks.filter(t=>t.status==="completed").length/allTasks.length)*100):0;
+      el.innerHTML=`<h3 style="margin-bottom:1rem;font-size:1rem">Task Completion — ${rate}% rate</h3>
+        <table class="data-table"><thead><tr><th>Task</th><th>Employee</th><th>Type</th><th>Status</th><th>Deadline</th></tr></thead>
+        <tbody>${allTasks.map(t=>`<tr><td>${t.title}</td><td>${empName(t.assignedTo)}</td><td>${t.taskType||"general"}</td><td>${statusBadge(isDelayed(t)?"delayed":t.status)}</td><td>${t.deadline||"—"}</td></tr>`).join("")}</tbody></table>`;
+    }
+  }
+  document.getElementById("mReportType").addEventListener("change",renderReport);
+
+  onAuthStateChanged(auth, async user => {
+    if(!user){window.location.href="login.html";return;}
+    const snap=await getDoc(doc(db,"users",user.uid));
+    if(!snap.exists()||snap.data().role!=="manager"){window.location.href="login.html";return;}
+    const name=snap.data().name||"Manager";
+    document.getElementById("sidebarName").textContent=name;
+    document.getElementById("userAvatar").textContent=name[0].toUpperCase();
+    document.getElementById("topAvatar").textContent=name[0].toUpperCase();
+
+    onSnapshot(collection(db,"users"),s=>{
+      employees=s.docs.map(d=>({id:d.id,...d.data()}));
+      renderEmployees();updateStats();renderRecentTasks();
+    });
+    onSnapshot(collection(db,"tasks"),s=>{
+      allTasks=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+      renderEmployees();updateStats();renderRecentTasks();
+    });
+    onSnapshot(collection(db,"sales"),s=>{
+      allSales=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+      renderSales();updateStats();
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click",async()=>{await signOut(auth);window.location.href="login.html";});
+  });
+</script>
+</body>
+</html>
